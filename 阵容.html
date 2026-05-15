@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>异环阵容养成记录</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: rgba(255, 250, 242, 0.92);
+      --panel-strong: #fffaf2;
+      --ink: #282119;
+      --muted: #7a6b5b;
+      --line: rgba(72, 52, 31, 0.14);
+      --brand: #c86631;
+      --brand-dark: #7b4223;
+      --warn: #b56d14;
+      --danger: #b74735;
+      --ok: #277d5d;
+      --shadow: 0 22px 64px rgba(57, 39, 18, 0.13);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(255, 213, 139, 0.45), transparent 30%),
+        radial-gradient(circle at 90% 6%, rgba(195, 102, 49, 0.16), transparent 28%),
+        linear-gradient(135deg, #f9f2e7 0%, #ede0cf 52%, #fbf7ef 100%);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1240px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 42px 0 56px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(255, 250, 242, 0.98), rgba(246, 229, 204, 0.88)),
+        repeating-linear-gradient(45deg, rgba(200, 102, 49, 0.06) 0 1px, transparent 1px 16px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      right: -90px;
+      top: -120px;
+      width: 300px;
+      height: 300px;
+      background: rgba(200, 102, 49, 0.13);
+    }
+
+    .hero::after {
+      right: 70px;
+      bottom: -80px;
+      width: 180px;
+      height: 180px;
+      background: rgba(39, 125, 93, 0.10);
+    }
+
+    .eyebrow {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      color: var(--brand-dark);
+      background: rgba(200, 102, 49, 0.12);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      margin: 18px 0 10px;
+      font-size: clamp(34px, 4.4vw, 58px);
+      line-height: 1.04;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-desc {
+      position: relative;
+      z-index: 1;
+      max-width: 790px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.85;
+    }
+
+    .stats {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .stat {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 250, 242, 0.72);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--brand-dark);
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 24px 0 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 250, 242, 0.62);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .legend .pill {
+      background: rgba(255, 255, 255, 0.56);
+    }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      user-select: none;
+    }
+
+    .toggle input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--brand);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 34px 0 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 30px;
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .role-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--panel);
+      box-shadow: 0 14px 36px rgba(57, 39, 18, 0.08);
+    }
+
+    .role-card.has-warning {
+      border-color: rgba(181, 109, 20, 0.32);
+      background: linear-gradient(180deg, #fffaf2, #fff4e4);
+    }
+
+    .role-card.has-danger {
+      border-color: rgba(183, 71, 53, 0.30);
+    }
+
+    .role-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .role-title {
+      min-width: 0;
+    }
+
+    .role-title h3 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+    }
+
+    .role-title .sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 28px;
+      padding: 6px 10px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .attr-ling { color: #247456; background: rgba(39, 125, 93, 0.12); border-color: rgba(39, 125, 93, 0.22); }
+    .attr-guang { color: #936318; background: rgba(216, 161, 54, 0.17); border-color: rgba(216, 161, 54, 0.28); }
+    .attr-zhou { color: #6d4aa0; background: rgba(109, 74, 160, 0.13); border-color: rgba(109, 74, 160, 0.22); }
+    .attr-xiang { color: #24758b; background: rgba(36, 117, 139, 0.13); border-color: rgba(36, 117, 139, 0.22); }
+    .pill-warn { color: var(--warn); background: rgba(181, 109, 20, 0.12); border-color: rgba(181, 109, 20, 0.22); }
+    .pill-danger { color: var(--danger); background: rgba(183, 71, 53, 0.11); border-color: rgba(183, 71, 53, 0.20); }
+    .pill-ok { color: var(--ok); background: rgba(39, 125, 93, 0.11); border-color: rgba(39, 125, 93, 0.20); }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 2px;
+    }
+
+    .info-box {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .info-box h4 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 10px;
+      color: var(--brand-dark);
+      font-size: 14px;
+      letter-spacing: 0.02em;
+    }
+
+    .list {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .list b {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .key-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .key-stat {
+      padding: 10px 12px;
+      border: 1px solid rgba(72, 52, 31, 0.10);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .key-stat b {
+      display: block;
+      color: var(--brand-dark);
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .key-stat span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .driver-box {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.54);
+    }
+
+    .driver-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      color: var(--brand-dark);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 7px 10px;
+      border: 1px solid rgba(72, 52, 31, 0.10);
+      border-radius: 999px;
+      color: #554331;
+      background: #f4eadb;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .chip.required {
+      color: #7a3e20;
+      background: rgba(200, 102, 49, 0.13);
+      border-color: rgba(200, 102, 49, 0.22);
+    }
+
+    .chip.extra {
+      color: #4c5d4f;
+      background: rgba(39, 125, 93, 0.10);
+      border-color: rgba(39, 125, 93, 0.18);
+    }
+
+    .chip.missing {
+      color: #8a4b10;
+      background: rgba(181, 109, 20, 0.13);
+      border-color: rgba(181, 109, 20, 0.24);
+    }
+
+    .todo {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(72, 52, 31, 0.20);
+    }
+
+    .todo-title {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .issue-panel {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .issue-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 250, 242, 0.76);
+      box-shadow: 0 10px 30px rgba(57, 39, 18, 0.06);
+    }
+
+    .issue-card h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .issue-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .issue-list li {
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(72, 52, 31, 0.09);
+    }
+
+    .issue-list b {
+      color: var(--ink);
+    }
+
+    .maintenance {
+      margin-top: 34px;
+      padding: 22px;
+      border: 1px dashed rgba(123, 66, 35, 0.36);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 250, 242, 0.70);
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .maintenance b {
+      color: var(--ink);
+    }
+
+    .hide-clean .role-card:not(.has-warning):not(.has-danger) {
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      .stats,
+      .team-grid,
+      .issue-panel {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(100% - 24px, 1240px);
+        padding: 22px 0 38px;
+      }
+
+      .hero {
+        padding: 24px;
+      }
+
+      .stats,
+      .team-grid,
+      .info-grid,
+      .issue-panel,
+      .key-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head,
+      .toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page" id="page">
+    <section class="hero">
+      <div class="eyebrow">异环账号养成记录</div>
+      <h1>核心阵容搭配</h1>
+      <p class="hero-desc">本页面基于 <b>阵容.md</b> 更新，用于快速查看两队角色、等级、弧盘、空幕、驱动块需求与当前缺口。后续仍以 Markdown 作为维护源文件，再同步生成 HTML 页面。</p>
+      <div class="stats" id="stats"></div>
+      <div class="toolbar">
+        <div class="legend">
+          <span class="pill pill-ok">已记录</span>
+          <span class="pill pill-warn">暂缺 / 待替换</span>
+          <span class="pill pill-danger">属性不符合</span>
+        </div>
+        <label class="toggle"><input type="checkbox" id="onlyIssues" /> 只看有缺口或异常的角色</label>
+      </div>
+    </section>
+
+    <section class="issue-panel" id="issuePanel"></section>
+
+    <section>
+      <div class="section-head">
+        <h2>1队</h2>
+        <p>娜娜莉、九原、零（主角）、早雾</p>
+      </div>
+      <div class="team-grid" id="team1"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>2队</h2>
+        <p>小吱、哈索尔、阿德勒、薄荷</p>
+      </div>
+      <div class="team-grid" id="team2"></div>
+    </section>
+
+    <section class="maintenance">
+      <b>维护说明：</b>后续新增或修改角色数据时，先更新 <b>阵容.md</b>。建议每个角色维持固定结构：角色属性、角色等级、弧盘、空幕、驱动块需求、待补充。HTML 页面会按照 Markdown 内容同步迁移。
+    </section>
+  </main>
+
+  <script>
+    const teams = [
+      {
+        id: "team1",
+        name: "1队",
+        roles: [
+          {
+            name: "娜娜莉",
+            attr: "灵",
+            level: 60,
+            keyStats: [
+              { label: "攻击力", value: "1651" },
+              { label: "暴击率", value: "75.20%" },
+              { label: "暴击伤害", value: "136.80%" },
+              { label: "通用伤害增强", value: "6.2%" }
+            ],
+            arc: { name: "预备备", level: 60, mix: "1阶" },
+            curtain: { name: "森林萤火之心", level: 20, main: "暴伤 +60%", subs: ["攻击力 +12.5%", "暴击率 +10%"] },
+            required: [
+              { name: "横向2格", count: 2 },
+              { name: "纵向3格", count: 1 },
+              { name: "L型开口右上", count: 1 },
+              { name: "特殊4格竖", count: 1 }
+            ],
+            extra: [
+              { name: "纵向2格", count: 3, missing: true, missingCount: 2 }
+            ],
+            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
+          },
+          {
+            name: "九原",
+            attr: "灵",
+            level: 60,
+            arc: { name: "现实避难所", level: 50, mix: "2阶" },
+            curtain: { name: "森林萤火之心", level: 20, main: "攻击力 +37.5%", subs: ["暴击伤害 +20%"] },
+            required: [
+              { name: "横向2格", count: 2 },
+              { name: "纵向3格", count: 1 },
+              { name: "L型开口右上", count: 1, missing: true },
+              { name: "特殊4格竖", count: 1 }
+            ],
+            extra: [
+              { name: "纵向2格", count: 3, missing: true }
+            ],
+            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
+          },
+          {
+            name: "零（主角）",
+            attr: "光",
+            level: 50,
+            arc: { name: "倾世之雨", level: 50, mix: "1阶" },
+            curtain: { name: "失落光芒", level: 20, main: "生命值 +37.5%", mainIssue: "主属性不符合", subs: ["攻击力 +80", "伤害增加 +10%"] },
+            required: [
+              { name: "横向2格", count: 2, missing: true },
+              { name: "L型开口右上", count: 1, missing: true },
+              { name: "L型开口左下", count: 1 },
+              { name: "特殊4格竖", count: 1 }
+            ],
+            extra: [
+              { name: "纵向3格", count: 1, missing: true },
+              { name: "横向3格", count: 1 }
+            ],
+            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
+          },
+          {
+            name: "早雾",
+            attr: "咒",
+            level: 50,
+            arc: { name: "好狗狗走四方", level: 20, mix: "1阶" },
+            curtain: { name: "音速蓝刺猬", level: 0, missing: true, main: "咒属性增伤 +6%", subs: [] },
+            required: [
+              { name: "L型开口右上", count: 1 },
+              { name: "L型开口右下", count: 1 },
+              { name: "L型开口左下", count: 1 },
+              { name: "L型开口左上", count: 1 }
+            ],
+            extra: [
+              { name: "纵向2格", count: 1 },
+              { name: "横向3格", count: 2 }
+            ],
+            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
+          }
+        ]
+      },
+      {
+        id: "team2",
+        name: "2队",
+        roles: [
+          {
+            name: "小吱",
+            attr: "光",
+            level: 60,
+            arc: { name: "思考喵", level: 50, mix: "1阶" },
+            curtain: { name: "失落光芒", level: 20, missing: true, main: "暴击率 +18%", subs: ["攻击力 +7.5%", "暴击伤害 +12%"] },
+            required: [
+              { name: "横向2格", count: 2, missing: true },
+              { name: "L型开口右上", count: 1, missing: true },
+              { name: "L型开口左下", count: 1 },
+              { name: "特殊4格竖", count: 1 }
+            ],
+            extra: [
+              { name: "L型开口左上", count: 1 },
+              { name: "L型开口右下", count: 1, missing: true }
+            ],
+            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
+          },
+          {
+            name: "哈索尔",
+            attr: "相",
+            level: 50,
+            arc: { name: "焰魂狂飙", level: 50, mix: "2阶" },
+            curtain: { name: "街头拳王", level: 20, missing: true, main: "暴伤 +48%", subs: [] },
+            required: [
+              { name: "横向2格", count: 2, missing: true },
+              { name: "横向3格", count: 1 },
+              { name: "L型开口左下", count: 2 },
+              { name: "特殊4格横", count: 1 }
+            ],
+            extra: [
+              { name: "L型开口左上", count: 1 }
+            ],
+            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
+          },
+          {
+            name: "阿德勒",
+            attr: "咒",
+            level: 50,
+            arc: { name: "勿亡伞", level: 40, mix: "5阶" },
+            curtain: { name: "守卫王国", level: 0, missing: true, main: "防御力 +6.3%", subs: [] },
+            required: [
+              { name: "纵向3格", count: 3, missing: true },
+              { name: "横向3格", count: 1 },
+              { name: "L型开口左下", count: 1 },
+              { name: "L型开口左上", count: 1, missing: true }
+            ],
+            extra: [
+              { name: "横向2格", count: 1, missing: true }
+            ],
+            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
+          },
+          {
+            name: "薄荷",
+            attr: "灵",
+            level: 50,
+            arc: { name: "极速之绵", level: 50, mix: "1阶" },
+            curtain: { name: "森林萤火之心", level: 20, main: "暴击率 +30%", subs: ["暴击伤害 +20%", "攻击力 +80"] },
+            required: [
+              { name: "横向2格", count: 2, missing: true },
+              { name: "纵向3格", count: 1, missing: true },
+              { name: "L型开口右上", count: 1 },
+              { name: "特殊4格竖", count: 1 }
+            ],
+            extra: [
+              { name: "L型开口右下", count: 2, missing: true }
+            ],
+            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
+          }
+        ]
+      }
+    ];
+
+    const attrClass = {
+      "灵": "attr-ling",
+      "光": "attr-guang",
+      "咒": "attr-zhou",
+      "相": "attr-xiang"
+    };
+
+    const allRoles = teams.flatMap(team => team.roles.map(role => ({ ...role, team: team.name })));
+
+    function missingCount(role) {
+      return [...role.required, ...role.extra]
+        .filter(item => item.missing)
+        .reduce((sum, item) => sum + (item.missingCount || item.count), 0);
+    }
+
+    function hasIssue(role) {
+      return missingCount(role) > 0 || role.curtain.missing || role.curtain.mainIssue;
+    }
+
+    function itemLabel(item) {
+      if (!item.missing) return `${item.name} × ${item.count}`;
+      return `${item.name} × ${item.count} 暂缺${item.missingCount && item.missingCount !== item.count ? item.missingCount : ""}`;
+    }
+
+    function renderStats() {
+      const missingDrivers = allRoles.reduce((sum, role) => sum + missingCount(role), 0);
+      const missingCurtains = allRoles.filter(role => role.curtain.missing).length;
+      const abnormalMain = allRoles.filter(role => role.curtain.mainIssue).length;
+      const stats = [
+        [teams.length, "核心养成队伍"],
+        [allRoles.length, "已记录角色"],
+        [missingDrivers, "暂缺驱动块数量"],
+        [missingCurtains + abnormalMain, "空幕暂缺 / 主属性异常"]
+      ];
+      document.getElementById("stats").innerHTML = stats.map(([num, label]) => `
+        <div class="stat"><strong>${num}</strong><span>${label}</span></div>
+      `).join("");
+    }
+
+    function renderIssues() {
+      const missingMap = new Map();
+      allRoles.forEach(role => {
+        [...role.required, ...role.extra].forEach(item => {
+          if (!item.missing) return;
+          missingMap.set(item.name, (missingMap.get(item.name) || 0) + (item.missingCount || item.count));
+        });
+      });
+      const missingItems = [...missingMap.entries()].sort((a, b) => b[1] - a[1]);
+      const curtainIssues = allRoles.filter(role => role.curtain.missing || role.curtain.mainIssue);
+      document.getElementById("issuePanel").innerHTML = `
+        <article class="issue-card">
+          <h3>驱动块缺口汇总</h3>
+          <ul class="issue-list">
+            ${missingItems.length ? missingItems.map(([name, count]) => `<li><b>${name}</b>：暂缺 ${count}</li>`).join("") : "<li>当前没有标记暂缺的驱动块。</li>"}
+          </ul>
+        </article>
+        <article class="issue-card">
+          <h3>空幕与属性问题</h3>
+          <ul class="issue-list">
+            ${curtainIssues.length ? curtainIssues.map(role => `
+              <li><b>${role.name}</b>：${role.curtain.missing ? `${role.curtain.name} 暂缺` : ""}${role.curtain.missing && role.curtain.mainIssue ? "；" : ""}${role.curtain.mainIssue ? role.curtain.mainIssue : ""}</li>
+            `).join("") : "<li>当前没有标记空幕暂缺或主属性异常。</li>"}
+          </ul>
+        </article>
+      `;
+    }
+
+    function renderRole(role) {
+      const issue = hasIssue(role);
+      const danger = Boolean(role.curtain.mainIssue);
+      const subs = role.curtain.subs && role.curtain.subs.length ? role.curtain.subs.join("、") : "待补充";
+      return `
+        <article class="role-card ${issue ? "has-warning" : ""} ${danger ? "has-danger" : ""}">
+          <div class="role-top">
+            <div class="role-title">
+              <h3>${role.name}</h3>
+              <div class="sub">${role.team} · Lv.${role.level}</div>
+            </div>
+            <span class="pill ${attrClass[role.attr] || ""}">${role.attr}</span>
+          </div>
+
+          ${role.keyStats && role.keyStats.length ? `
+            <div class="key-stats">
+              ${role.keyStats.map(stat => `<div class="key-stat"><b>${stat.value}</b><span>${stat.label}</span></div>`).join("")}
+            </div>
+          ` : ""}
+
+          <div class="info-grid">
+            <div class="info-box">
+              <h4>弧盘</h4>
+              <ul class="list">
+                <li><b>名称：</b>${role.arc.name}</li>
+                <li><b>等级：</b>${role.arc.level}</li>
+                <li><b>混频：</b>${role.arc.mix}</li>
+              </ul>
+            </div>
+            <div class="info-box">
+              <h4>空幕 ${role.curtain.missing ? `<span class="pill pill-warn">暂缺</span>` : ""}</h4>
+              <ul class="list">
+                <li><b>名称：</b>${role.curtain.name}</li>
+                <li><b>等级：</b>${role.curtain.level}</li>
+                <li><b>主属性：</b>${role.curtain.main} ${role.curtain.mainIssue ? `<span class="pill pill-danger">${role.curtain.mainIssue}</span>` : ""}</li>
+                <li><b>副属性：</b>${subs}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="driver-box">
+            <div class="driver-title">
+              <span>驱动块需求</span>
+              ${missingCount(role) ? `<span class="pill pill-warn">缺口 ${missingCount(role)}</span>` : `<span class="pill pill-ok">无标记缺口</span>`}
+            </div>
+            <div class="chip-row">
+              ${role.required.map(item => `<span class="chip required ${item.missing ? "missing" : ""}">必备 ${itemLabel(item)}</span>`).join("")}
+              ${role.extra.map(item => `<span class="chip extra ${item.missing ? "missing" : ""}">补充 ${itemLabel(item)}</span>`).join("")}
+            </div>
+          </div>
+
+          <div class="todo">
+            <p class="todo-title">待补充</p>
+            <div class="chip-row">
+              ${role.todo.map(item => `<span class="chip">${item}</span>`).join("")}
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderTeams() {
+      teams.forEach(team => {
+        document.getElementById(team.id).innerHTML = team.roles.map(role => renderRole({ ...role, team: team.name })).join("");
+      });
+    }
+
+    renderStats();
+    renderIssues();
+    renderTeams();
+
+    document.getElementById("onlyIssues").addEventListener("change", event => {
+      document.getElementById("page").classList.toggle("hide-clean", event.target.checked);
+    });
+  </script>
+</body>
+</html>
