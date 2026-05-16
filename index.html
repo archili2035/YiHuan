@@ -8,12 +8,13 @@
     :root {
       --bg: #f4efe7;
       --panel: rgba(255, 250, 242, 0.92);
-      --panel-strong: #fffaf2;
       --ink: #282119;
       --muted: #7a6b5b;
       --line: rgba(72, 52, 31, 0.14);
       --brand: #c86631;
       --brand-dark: #7b4223;
+      --gold: #b98218;
+      --purple: #7850b7;
       --warn: #b56d14;
       --danger: #b74735;
       --ok: #277d5d;
@@ -24,9 +25,7 @@
       --radius-sm: 10px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -37,10 +36,6 @@
         radial-gradient(circle at 10% 8%, rgba(255, 213, 139, 0.45), transparent 30%),
         radial-gradient(circle at 90% 6%, rgba(195, 102, 49, 0.16), transparent 28%),
         linear-gradient(135deg, #f9f2e7 0%, #ede0cf 52%, #fbf7ef 100%);
-    }
-
-    a {
-      color: inherit;
     }
 
     .page {
@@ -111,7 +106,7 @@
     .hero-desc {
       position: relative;
       z-index: 1;
-      max-width: 790px;
+      max-width: 850px;
       margin: 0;
       color: var(--muted);
       font-size: 16px;
@@ -162,15 +157,8 @@
       background: rgba(255, 250, 242, 0.62);
     }
 
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .legend .pill {
-      background: rgba(255, 255, 255, 0.56);
-    }
+    .legend { display: flex; flex-wrap: wrap; gap: 8px; }
+    .legend .pill { background: rgba(255, 255, 255, 0.56); }
 
     .toggle {
       display: inline-flex;
@@ -181,11 +169,7 @@
       user-select: none;
     }
 
-    .toggle input {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--brand);
-    }
+    .toggle input { width: 16px; height: 16px; accent-color: var(--brand); }
 
     .section-head {
       display: flex;
@@ -224,14 +208,12 @@
       box-shadow: 0 14px 36px rgba(57, 39, 18, 0.08);
     }
 
+    .role-card.has-transition { border-color: rgba(120, 80, 183, 0.22); }
     .role-card.has-warning {
       border-color: rgba(181, 109, 20, 0.32);
       background: linear-gradient(180deg, #fffaf2, #fff4e4);
     }
-
-    .role-card.has-danger {
-      border-color: rgba(183, 71, 53, 0.30);
-    }
+    .role-card.has-danger { border-color: rgba(183, 71, 53, 0.30); }
 
     .role-top {
       display: flex;
@@ -241,22 +223,9 @@
       margin-bottom: 14px;
     }
 
-    .role-title {
-      min-width: 0;
-    }
-
-    .role-title h3 {
-      margin: 0;
-      font-size: 24px;
-      line-height: 1.2;
-      letter-spacing: -0.03em;
-    }
-
-    .role-title .sub {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 13px;
-    }
+    .role-title { min-width: 0; }
+    .role-title h3 { margin: 0; font-size: 24px; line-height: 1.2; letter-spacing: -0.03em; }
+    .role-title .sub { margin-top: 6px; color: var(--muted); font-size: 13px; }
 
     .pill {
       display: inline-flex;
@@ -276,50 +245,11 @@
     .attr-guang { color: #936318; background: rgba(216, 161, 54, 0.17); border-color: rgba(216, 161, 54, 0.28); }
     .attr-zhou { color: #6d4aa0; background: rgba(109, 74, 160, 0.13); border-color: rgba(109, 74, 160, 0.22); }
     .attr-xiang { color: #24758b; background: rgba(36, 117, 139, 0.13); border-color: rgba(36, 117, 139, 0.22); }
+    .pill-gold { color: var(--gold); background: rgba(185, 130, 24, 0.12); border-color: rgba(185, 130, 24, 0.24); }
+    .pill-purple { color: var(--purple); background: rgba(120, 80, 183, 0.12); border-color: rgba(120, 80, 183, 0.22); }
     .pill-warn { color: var(--warn); background: rgba(181, 109, 20, 0.12); border-color: rgba(181, 109, 20, 0.22); }
     .pill-danger { color: var(--danger); background: rgba(183, 71, 53, 0.11); border-color: rgba(183, 71, 53, 0.20); }
     .pill-ok { color: var(--ok); background: rgba(39, 125, 93, 0.11); border-color: rgba(39, 125, 93, 0.20); }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 2px;
-    }
-
-    .info-box {
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      background: rgba(255, 255, 255, 0.58);
-    }
-
-    .info-box h4 {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin: 0 0 10px;
-      color: var(--brand-dark);
-      font-size: 14px;
-      letter-spacing: 0.02em;
-    }
-
-    .list {
-      display: grid;
-      gap: 7px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .list b {
-      color: var(--ink);
-      font-weight: 800;
-    }
 
     .key-stats {
       display: grid;
@@ -335,47 +265,137 @@
       background: rgba(255, 255, 255, 0.58);
     }
 
-    .key-stat b {
-      display: block;
-      color: var(--brand-dark);
-      font-size: 15px;
-      line-height: 1.25;
+    .key-stat b { display: block; color: var(--brand-dark); font-size: 15px; line-height: 1.25; }
+    .key-stat span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: 0.04em; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 2px;
     }
 
-    .key-stat span {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-    }
-
+    .info-box,
     .driver-box {
-      margin-top: 12px;
       padding: 14px;
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
       background: rgba(255, 255, 255, 0.54);
     }
 
+    .driver-box { margin-top: 12px; }
+
+    .info-box h4,
     .driver-title {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin: 0 0 10px;
       color: var(--brand-dark);
       font-size: 14px;
       font-weight: 800;
+      letter-spacing: 0.02em;
     }
 
-    .chip-row {
+    .list {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .list b { color: var(--ink); font-weight: 800; }
+
+    .quality-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .quality {
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(72, 52, 31, 0.10);
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .quality b { display: block; font-size: 18px; line-height: 1; }
+    .quality span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .quality.gold b { color: var(--gold); }
+    .quality.purple b { color: var(--purple); }
+    .quality.missing b { color: var(--warn); }
+    .quality.lines b { color: var(--brand-dark); }
+
+    .driver-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .driver-item {
+      border: 1px solid rgba(72, 52, 31, 0.10);
+      border-radius: 13px;
+      background: rgba(255, 250, 242, 0.68);
+      overflow: hidden;
+    }
+
+    .driver-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+    }
+
+    .driver-name {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #4f3c2d;
     }
 
+    .driver-lines {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 0 12px 10px;
+    }
+
+    .line-chip {
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: #5f4a37;
+      background: rgba(72, 52, 31, 0.07);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .driver-group-title {
+      margin: 12px 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .todo {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(72, 52, 31, 0.20);
+    }
+
+    .todo-title { margin: 0 0 8px; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: 0.08em; }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
     .chip {
       display: inline-flex;
       align-items: center;
@@ -389,41 +409,9 @@
       font-weight: 800;
     }
 
-    .chip.required {
-      color: #7a3e20;
-      background: rgba(200, 102, 49, 0.13);
-      border-color: rgba(200, 102, 49, 0.22);
-    }
-
-    .chip.extra {
-      color: #4c5d4f;
-      background: rgba(39, 125, 93, 0.10);
-      border-color: rgba(39, 125, 93, 0.18);
-    }
-
-    .chip.missing {
-      color: #8a4b10;
-      background: rgba(181, 109, 20, 0.13);
-      border-color: rgba(181, 109, 20, 0.24);
-    }
-
-    .todo {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px dashed rgba(72, 52, 31, 0.20);
-    }
-
-    .todo-title {
-      margin: 0 0 8px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-    }
-
     .issue-panel {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1fr 1fr;
       gap: 18px;
       margin-top: 18px;
     }
@@ -436,33 +424,10 @@
       box-shadow: 0 10px 30px rgba(57, 39, 18, 0.06);
     }
 
-    .issue-card h3 {
-      margin: 0 0 12px;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-    }
-
-    .issue-list {
-      display: grid;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .issue-list li {
-      padding: 10px 12px;
-      border-radius: var(--radius-sm);
-      background: rgba(255, 255, 255, 0.55);
-      border: 1px solid rgba(72, 52, 31, 0.09);
-    }
-
-    .issue-list b {
-      color: var(--ink);
-    }
+    .issue-card h3 { margin: 0 0 12px; font-size: 18px; letter-spacing: -0.02em; }
+    .issue-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .issue-list li { padding: 10px 12px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.55); border: 1px solid rgba(72, 52, 31, 0.09); }
+    .issue-list b { color: var(--ink); }
 
     .maintenance {
       margin-top: 34px;
@@ -474,45 +439,19 @@
       line-height: 1.8;
     }
 
-    .maintenance b {
-      color: var(--ink);
-    }
-
-    .hide-clean .role-card:not(.has-warning):not(.has-danger) {
-      display: none;
-    }
+    .maintenance b { color: var(--ink); }
+    .hide-clean .role-card:not(.has-transition):not(.has-warning):not(.has-danger) { display: none; }
 
     @media (max-width: 980px) {
-      .stats,
-      .team-grid,
-      .issue-panel {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .stats, .team-grid, .issue-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 760px) {
-      .page {
-        width: min(100% - 24px, 1240px);
-        padding: 22px 0 38px;
-      }
-
-      .hero {
-        padding: 24px;
-      }
-
-      .stats,
-      .team-grid,
-      .info-grid,
-      .issue-panel,
-      .key-stats {
-        grid-template-columns: 1fr;
-      }
-
-      .section-head,
-      .toolbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
+      .page { width: min(100% - 24px, 1240px); padding: 22px 0 38px; }
+      .hero { padding: 24px; }
+      .stats, .team-grid, .info-grid, .issue-panel, .key-stats, .quality-grid { grid-template-columns: 1fr; }
+      .section-head, .toolbar { align-items: flex-start; flex-direction: column; }
+      .driver-main { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
@@ -521,15 +460,16 @@
     <section class="hero">
       <div class="eyebrow">异环账号养成记录</div>
       <h1>核心阵容搭配</h1>
-      <p class="hero-desc">本页面基于 <b>阵容.md</b> 更新，用于快速查看两队角色、等级、弧盘、空幕、驱动块需求与当前缺口。后续仍以 Markdown 作为维护源文件，再同步生成 HTML 页面。</p>
+      <p class="hero-desc">本页面基于 <b>阵容.md</b> 更新。当前记录重点已经从“是否暂缺”推进到“驱动块品质与词条质量”：金色代表较优基底，紫色代表过渡位，词条详情用于后续判断替换优先级。</p>
       <div class="stats" id="stats"></div>
       <div class="toolbar">
         <div class="legend">
-          <span class="pill pill-ok">已记录</span>
-          <span class="pill pill-warn">暂缺 / 待替换</span>
-          <span class="pill pill-danger">属性不符合</span>
+          <span class="pill pill-gold">金色驱动</span>
+          <span class="pill pill-purple">紫色过渡</span>
+          <span class="pill pill-warn">空幕暂缺</span>
+          <span class="pill pill-danger">主属性异常</span>
         </div>
-        <label class="toggle"><input type="checkbox" id="onlyIssues" /> 只看有缺口或异常的角色</label>
+        <label class="toggle"><input type="checkbox" id="onlyIssues" /> 只看紫色过渡 / 空幕异常角色</label>
       </div>
     </section>
 
@@ -552,7 +492,7 @@
     </section>
 
     <section class="maintenance">
-      <b>维护说明：</b>后续新增或修改角色数据时，先更新 <b>阵容.md</b>。建议每个角色维持固定结构：角色属性、角色等级、弧盘、空幕、驱动块需求、待补充。HTML 页面会按照 Markdown 内容同步迁移。
+      <b>维护说明：</b>后续新增或修改角色数据时，先更新 <b>阵容.md</b>。驱动块建议继续使用固定格式：<b>形状 × 数量（品质）</b>，词条作为该条目的子项。HTML 会按金色、紫色、暂缺和词条数量自动汇总展示。
     </section>
   </main>
 
@@ -575,13 +515,16 @@
             arc: { name: "预备备", level: 60, mix: "1阶" },
             curtain: { name: "森林萤火之心", level: 20, main: "暴伤 +60%", subs: ["攻击力 +12.5%", "暴击率 +10%"] },
             required: [
-              { name: "横向2格", count: 2 },
-              { name: "纵向3格", count: 1 },
-              { name: "L型开口右上", count: 1 },
-              { name: "特殊4格竖", count: 1 }
+              { name: "横向2格", quality: "金", lines: ["暴击率 +2%", "攻击力 +16"] },
+              { name: "横向2格", quality: "金" },
+              { name: "纵向3格", quality: "金", lines: ["攻击力 +24", "暴伤 +6%", "攻击力 +3.75%", "伤害 +3%"] },
+              { name: "L型开口右上", quality: "金" },
+              { name: "特殊4格竖", quality: "金", lines: ["暴伤 +8%", "暴击率 +4%"] }
             ],
             extra: [
-              { name: "纵向2格", count: 3, missing: true, missingCount: 2 }
+              { name: "纵向2格", quality: "金" },
+              { name: "纵向2格", quality: "紫" },
+              { name: "纵向2格", quality: "紫" }
             ],
             todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
           },
@@ -592,13 +535,16 @@
             arc: { name: "现实避难所", level: 50, mix: "2阶" },
             curtain: { name: "森林萤火之心", level: 20, main: "攻击力 +37.5%", subs: ["暴击伤害 +20%"] },
             required: [
-              { name: "横向2格", count: 2 },
-              { name: "纵向3格", count: 1 },
-              { name: "L型开口右上", count: 1, missing: true },
-              { name: "特殊4格竖", count: 1 }
+              { name: "横向2格", quality: "金" },
+              { name: "横向2格", quality: "金" },
+              { name: "纵向3格", quality: "金" },
+              { name: "L型开口右上", quality: "紫" },
+              { name: "特殊4格竖", quality: "金" }
             ],
             extra: [
-              { name: "纵向2格", count: 3, missing: true }
+              { name: "纵向2格", quality: "紫" },
+              { name: "纵向2格", quality: "紫" },
+              { name: "纵向2格", quality: "紫" }
             ],
             todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
           },
@@ -609,14 +555,15 @@
             arc: { name: "倾世之雨", level: 50, mix: "1阶" },
             curtain: { name: "失落光芒", level: 20, main: "生命值 +37.5%", mainIssue: "主属性不符合", subs: ["攻击力 +80", "伤害增加 +10%"] },
             required: [
-              { name: "横向2格", count: 2, missing: true },
-              { name: "L型开口右上", count: 1, missing: true },
-              { name: "L型开口左下", count: 1 },
-              { name: "特殊4格竖", count: 1 }
+              { name: "横向2格", quality: "紫" },
+              { name: "横向2格", quality: "紫" },
+              { name: "L型开口右上", quality: "紫" },
+              { name: "L型开口左下", quality: "金" },
+              { name: "特殊4格竖", quality: "金" }
             ],
             extra: [
-              { name: "纵向3格", count: 1, missing: true },
-              { name: "横向3格", count: 1 }
+              { name: "纵向3格", quality: "紫" },
+              { name: "横向3格", quality: "金" }
             ],
             todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
           },
@@ -627,14 +574,15 @@
             arc: { name: "好狗狗走四方", level: 20, mix: "1阶" },
             curtain: { name: "音速蓝刺猬", level: 0, missing: true, main: "咒属性增伤 +6%", subs: [] },
             required: [
-              { name: "L型开口右上", count: 1 },
-              { name: "L型开口右下", count: 1 },
-              { name: "L型开口左下", count: 1 },
-              { name: "L型开口左上", count: 1 }
+              { name: "L型开口右上", quality: "金" },
+              { name: "L型开口右下", quality: "金" },
+              { name: "L型开口左下", quality: "金" },
+              { name: "L型开口左上", quality: "金" }
             ],
             extra: [
-              { name: "纵向2格", count: 1 },
-              { name: "横向3格", count: 2 }
+              { name: "纵向2格", quality: "紫" },
+              { name: "横向3格", quality: "金" },
+              { name: "横向3格", quality: "金" }
             ],
             todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
           }
@@ -648,17 +596,24 @@
             name: "小吱",
             attr: "光",
             level: 60,
+            keyStats: [
+              { label: "攻击力", value: "1533" },
+              { label: "暴击率", value: "5%" },
+              { label: "暴击伤害", value: "92.8%" },
+              { label: "通用伤害增强", value: "12.6%" }
+            ],
             arc: { name: "思考喵", level: 50, mix: "1阶" },
             curtain: { name: "失落光芒", level: 20, missing: true, main: "暴击率 +18%", subs: ["攻击力 +7.5%", "暴击伤害 +12%"] },
             required: [
-              { name: "横向2格", count: 2, missing: true },
-              { name: "L型开口右上", count: 1, missing: true },
-              { name: "L型开口左下", count: 1 },
-              { name: "特殊4格竖", count: 1 }
+              { name: "横向2格", quality: "紫" },
+              { name: "横向2格", quality: "紫" },
+              { name: "L型开口右上", quality: "紫" },
+              { name: "L型开口左下", quality: "金" },
+              { name: "特殊4格竖", quality: "金" }
             ],
             extra: [
-              { name: "L型开口左上", count: 1 },
-              { name: "L型开口右下", count: 1, missing: true }
+              { name: "L型开口左上", quality: "金" },
+              { name: "L型开口右下", quality: "紫" }
             ],
             todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
           },
@@ -669,13 +624,16 @@
             arc: { name: "焰魂狂飙", level: 50, mix: "2阶" },
             curtain: { name: "街头拳王", level: 20, missing: true, main: "暴伤 +48%", subs: [] },
             required: [
-              { name: "横向2格", count: 2, missing: true },
-              { name: "横向3格", count: 1 },
-              { name: "L型开口左下", count: 2 },
-              { name: "特殊4格横", count: 1 }
+              { name: "横向2格", quality: "金" },
+              { name: "横向2格", quality: "紫" },
+              { name: "横向3格", quality: "金" },
+              { name: "横向3格", quality: "金" },
+              { name: "L型开口左下", quality: "金" },
+              { name: "L型开口左下", quality: "金" },
+              { name: "特殊4格横", quality: "金" }
             ],
             extra: [
-              { name: "L型开口左上", count: 1 }
+              { name: "L型开口左上", quality: "金" }
             ],
             todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
           },
@@ -686,13 +644,15 @@
             arc: { name: "勿亡伞", level: 40, mix: "5阶" },
             curtain: { name: "守卫王国", level: 0, missing: true, main: "防御力 +6.3%", subs: [] },
             required: [
-              { name: "纵向3格", count: 3, missing: true },
-              { name: "横向3格", count: 1 },
-              { name: "L型开口左下", count: 1 },
-              { name: "L型开口左上", count: 1, missing: true }
+              { name: "纵向3格", quality: "金" },
+              { name: "纵向3格", quality: "紫" },
+              { name: "纵向3格", quality: "紫" },
+              { name: "横向3格", quality: "金" },
+              { name: "L型开口左下", quality: "金" },
+              { name: "L型开口左上", quality: "紫" }
             ],
             extra: [
-              { name: "横向2格", count: 1, missing: true }
+              { name: "横向2格", quality: "紫" }
             ],
             todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
           },
@@ -703,13 +663,15 @@
             arc: { name: "极速之绵", level: 50, mix: "1阶" },
             curtain: { name: "森林萤火之心", level: 20, main: "暴击率 +30%", subs: ["暴击伤害 +20%", "攻击力 +80"] },
             required: [
-              { name: "横向2格", count: 2, missing: true },
-              { name: "纵向3格", count: 1, missing: true },
-              { name: "L型开口右上", count: 1 },
-              { name: "特殊4格竖", count: 1 }
+              { name: "横向2格", quality: "金" },
+              { name: "横向2格", quality: "紫" },
+              { name: "纵向3格", quality: "紫" },
+              { name: "L型开口右上", quality: "金" },
+              { name: "特殊4格竖", quality: "金" }
             ],
             extra: [
-              { name: "L型开口右下", count: 2, missing: true }
+              { name: "L型开口右下", quality: "紫" },
+              { name: "L型开口右下", quality: "紫" }
             ],
             todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
           }
@@ -717,39 +679,49 @@
       }
     ];
 
-    const attrClass = {
-      "灵": "attr-ling",
-      "光": "attr-guang",
-      "咒": "attr-zhou",
-      "相": "attr-xiang"
-    };
-
+    const attrClass = { "灵": "attr-ling", "光": "attr-guang", "咒": "attr-zhou", "相": "attr-xiang" };
     const allRoles = teams.flatMap(team => team.roles.map(role => ({ ...role, team: team.name })));
 
-    function missingCount(role) {
-      return [...role.required, ...role.extra]
-        .filter(item => item.missing)
-        .reduce((sum, item) => sum + (item.missingCount || item.count), 0);
+    function drivers(role) {
+      return [...role.required.map(item => ({ ...item, group: "必备" })), ...role.extra.map(item => ({ ...item, group: "补充" }))];
+    }
+
+    function qualityStats(role) {
+      const stats = { gold: 0, purple: 0, missing: 0, lines: 0, total: 0 };
+      drivers(role).forEach(item => {
+        stats.total += 1;
+        if (item.missing || item.quality === "暂缺") stats.missing += 1;
+        if (item.quality === "金") stats.gold += 1;
+        if (item.quality === "紫") stats.purple += 1;
+        if (item.lines) stats.lines += item.lines.length;
+      });
+      return stats;
     }
 
     function hasIssue(role) {
-      return missingCount(role) > 0 || role.curtain.missing || role.curtain.mainIssue;
+      const stats = qualityStats(role);
+      return stats.purple > 0 || stats.missing > 0 || role.curtain.missing || role.curtain.mainIssue;
     }
 
-    function itemLabel(item) {
-      if (!item.missing) return `${item.name} × ${item.count}`;
-      return `${item.name} × ${item.count} 暂缺${item.missingCount && item.missingCount !== item.count ? item.missingCount : ""}`;
+    function statusPill(role) {
+      const stats = qualityStats(role);
+      if (stats.missing > 0) return `<span class="pill pill-warn">仍有暂缺</span>`;
+      if (role.curtain.mainIssue) return `<span class="pill pill-danger">主属性异常</span>`;
+      if (role.curtain.missing) return `<span class="pill pill-warn">空幕暂缺</span>`;
+      if (stats.purple > 0) return `<span class="pill pill-purple">紫色过渡</span>`;
+      return `<span class="pill pill-ok">驱动成型</span>`;
     }
 
     function renderStats() {
-      const missingDrivers = allRoles.reduce((sum, role) => sum + missingCount(role), 0);
-      const missingCurtains = allRoles.filter(role => role.curtain.missing).length;
-      const abnormalMain = allRoles.filter(role => role.curtain.mainIssue).length;
+      const totalDrivers = allRoles.reduce((sum, role) => sum + qualityStats(role).total, 0);
+      const goldDrivers = allRoles.reduce((sum, role) => sum + qualityStats(role).gold, 0);
+      const purpleDrivers = allRoles.reduce((sum, role) => sum + qualityStats(role).purple, 0);
+      const lineCount = allRoles.reduce((sum, role) => sum + qualityStats(role).lines, 0);
       const stats = [
-        [teams.length, "核心养成队伍"],
         [allRoles.length, "已记录角色"],
-        [missingDrivers, "暂缺驱动块数量"],
-        [missingCurtains + abnormalMain, "空幕暂缺 / 主属性异常"]
+        [totalDrivers, "驱动块条目"],
+        [`${goldDrivers}/${purpleDrivers}`, "金色 / 紫色"],
+        [lineCount, "已记录驱动词条"]
       ];
       document.getElementById("stats").innerHTML = stats.map(([num, label]) => `
         <div class="stat"><strong>${num}</strong><span>${label}</span></div>
@@ -757,39 +729,70 @@
     }
 
     function renderIssues() {
-      const missingMap = new Map();
+      const nonGoldMap = new Map();
       allRoles.forEach(role => {
-        [...role.required, ...role.extra].forEach(item => {
-          if (!item.missing) return;
-          missingMap.set(item.name, (missingMap.get(item.name) || 0) + (item.missingCount || item.count));
+        drivers(role).forEach(item => {
+          if (item.quality === "金") return;
+          const current = nonGoldMap.get(item.name) || { total: 0, purple: 0, missing: 0 };
+          current.total += 1;
+          if (item.quality === "紫") current.purple += 1;
+          if (item.missing || item.quality === "暂缺") current.missing += 1;
+          nonGoldMap.set(item.name, current);
         });
       });
-      const missingItems = [...missingMap.entries()].sort((a, b) => b[1] - a[1]);
+      const nonGoldShapes = [...nonGoldMap.entries()].sort((a, b) => b[1].total - a[1].total || a[0].localeCompare(b[0], "zh-Hans-CN"));
       const curtainIssues = allRoles.filter(role => role.curtain.missing || role.curtain.mainIssue);
       document.getElementById("issuePanel").innerHTML = `
         <article class="issue-card">
-          <h3>驱动块缺口汇总</h3>
+          <h3>非金色驱动块形状统计</h3>
           <ul class="issue-list">
-            ${missingItems.length ? missingItems.map(([name, count]) => `<li><b>${name}</b>：暂缺 ${count}</li>`).join("") : "<li>当前没有标记暂缺的驱动块。</li>"}
+            ${nonGoldShapes.length ? nonGoldShapes.map(([name, stats]) => `<li><b>${name}</b>：非金色 ${stats.total}${stats.purple ? `，紫色 ${stats.purple}` : ""}${stats.missing ? `，暂缺 ${stats.missing}` : ""}</li>`).join("") : "<li>当前所有已记录驱动块均为金色。</li>"}
           </ul>
         </article>
         <article class="issue-card">
-          <h3>空幕与属性问题</h3>
+          <h3>空幕与主属性问题</h3>
           <ul class="issue-list">
             ${curtainIssues.length ? curtainIssues.map(role => `
               <li><b>${role.name}</b>：${role.curtain.missing ? `${role.curtain.name} 暂缺` : ""}${role.curtain.missing && role.curtain.mainIssue ? "；" : ""}${role.curtain.mainIssue ? role.curtain.mainIssue : ""}</li>
-            `).join("") : "<li>当前没有标记空幕暂缺或主属性异常。</li>"}
+            `).join("") : "<li>当前没有空幕暂缺或主属性异常。</li>"}
           </ul>
         </article>
       `;
     }
 
+    function renderDriverItem(item) {
+      const qualityClass = item.quality === "金" ? "pill-gold" : item.quality === "紫" ? "pill-purple" : "pill-warn";
+      return `
+        <div class="driver-item">
+          <div class="driver-main">
+            <div class="driver-name">
+              <span>${item.name}</span>
+              <span class="pill ${qualityClass}">${item.quality || "未标"}</span>
+              <span class="pill">${item.group}</span>
+            </div>
+          </div>
+          ${item.lines && item.lines.length ? `<div class="driver-lines">${item.lines.map(line => `<span class="line-chip">${line}</span>`).join("")}</div>` : ""}
+        </div>
+      `;
+    }
+
+    function renderDriverGroup(title, items) {
+      return `
+        <div class="driver-group-title">${title}</div>
+        <div class="driver-list">${items.map(item => renderDriverItem(item)).join("")}</div>
+      `;
+    }
+
     function renderRole(role) {
+      const stats = qualityStats(role);
       const issue = hasIssue(role);
       const danger = Boolean(role.curtain.mainIssue);
+      const transition = stats.purple > 0;
       const subs = role.curtain.subs && role.curtain.subs.length ? role.curtain.subs.join("、") : "待补充";
+      const required = role.required.map(item => ({ ...item, group: "必备" }));
+      const extra = role.extra.map(item => ({ ...item, group: "补充" }));
       return `
-        <article class="role-card ${issue ? "has-warning" : ""} ${danger ? "has-danger" : ""}">
+        <article class="role-card ${transition ? "has-transition" : ""} ${issue ? "has-warning" : ""} ${danger ? "has-danger" : ""}">
           <div class="role-top">
             <div class="role-title">
               <h3>${role.name}</h3>
@@ -826,20 +829,22 @@
 
           <div class="driver-box">
             <div class="driver-title">
-              <span>驱动块需求</span>
-              ${missingCount(role) ? `<span class="pill pill-warn">缺口 ${missingCount(role)}</span>` : `<span class="pill pill-ok">无标记缺口</span>`}
+              <span>驱动块装配</span>
+              ${statusPill(role)}
             </div>
-            <div class="chip-row">
-              ${role.required.map(item => `<span class="chip required ${item.missing ? "missing" : ""}">必备 ${itemLabel(item)}</span>`).join("")}
-              ${role.extra.map(item => `<span class="chip extra ${item.missing ? "missing" : ""}">补充 ${itemLabel(item)}</span>`).join("")}
+            <div class="quality-grid">
+              <div class="quality gold"><b>${stats.gold}</b><span>金色</span></div>
+              <div class="quality purple"><b>${stats.purple}</b><span>紫色</span></div>
+              <div class="quality missing"><b>${stats.missing}</b><span>暂缺</span></div>
+              <div class="quality lines"><b>${stats.lines}</b><span>词条</span></div>
             </div>
+            ${renderDriverGroup("必备", required)}
+            ${renderDriverGroup("补充", extra)}
           </div>
 
           <div class="todo">
             <p class="todo-title">待补充</p>
-            <div class="chip-row">
-              ${role.todo.map(item => `<span class="chip">${item}</span>`).join("")}
-            </div>
+            <div class="chip-row">${role.todo.map(item => `<span class="chip">${item}</span>`).join("")}</div>
           </div>
         </article>
       `;
