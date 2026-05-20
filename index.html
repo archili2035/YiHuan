@@ -411,7 +411,7 @@
 
     .issue-panel {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.4fr 1fr;
       gap: 18px;
       margin-top: 18px;
     }
@@ -428,6 +428,85 @@
     .issue-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; color: var(--muted); font-size: 14px; line-height: 1.55; }
     .issue-list li { padding: 10px 12px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.55); border: 1px solid rgba(72, 52, 31, 0.09); }
     .issue-list b { color: var(--ink); }
+
+
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
+      border: 1px solid rgba(72, 52, 31, 0.12);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.50);
+      font-size: 13px;
+    }
+
+    .matrix-table th,
+    .matrix-table td {
+      padding: 9px 10px;
+      border-bottom: 1px solid rgba(72, 52, 31, 0.09);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .matrix-table th:first-child,
+    .matrix-table td:first-child {
+      text-align: left;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .matrix-table th {
+      color: var(--brand-dark);
+      background: rgba(200, 102, 49, 0.08);
+      font-weight: 900;
+    }
+
+    .matrix-table tr:last-child td { border-bottom: none; }
+
+    .matrix-table td.has-value {
+      color: var(--brand-dark);
+      font-weight: 900;
+      background: rgba(185, 130, 24, 0.08);
+    }
+
+    .recommend-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .recommend-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(72, 52, 31, 0.09);
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .recommend-list b { color: var(--ink); }
+
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      color: #fffaf2;
+      background: var(--brand);
+      font-size: 12px;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
 
     .maintenance {
       margin-top: 34px;
@@ -478,7 +557,7 @@
     <section>
       <div class="section-head">
         <h2>1队</h2>
-        <p>娜娜莉、九原、零（主角）、早雾</p>
+        <p>娜娜莉、九原、零（主角）、浔</p>
       </div>
       <div class="team-grid" id="team1"></div>
     </section>
@@ -486,7 +565,7 @@
     <section>
       <div class="section-head">
         <h2>2队</h2>
-        <p>小吱、哈索尔、阿德勒、薄荷</p>
+        <p>小吱、哈索尔、早雾、薄荷</p>
       </div>
       <div class="team-grid" id="team2"></div>
     </section>
@@ -499,185 +578,655 @@
   <script>
     const teams = [
       {
-        id: "team1",
-        name: "1队",
-        roles: [
-          {
-            name: "娜娜莉",
-            attr: "灵",
-            level: 60,
-            keyStats: [
-              { label: "攻击力", value: "1651" },
-              { label: "暴击率", value: "75.20%" },
-              { label: "暴击伤害", value: "136.80%" },
-              { label: "通用伤害增强", value: "6.2%" }
-            ],
-            arc: { name: "预备备", level: 60, mix: "1阶" },
-            curtain: { name: "森林萤火之心", level: 20, main: "暴伤 +60%", subs: ["攻击力 +12.5%", "暴击率 +10%"] },
-            required: [
-              { name: "横向2格", quality: "金", lines: ["暴击率 +2%", "攻击力 +16"] },
-              { name: "横向2格", quality: "金" },
-              { name: "纵向3格", quality: "金", lines: ["攻击力 +24", "暴伤 +6%", "攻击力 +3.75%", "伤害 +3%"] },
-              { name: "L型开口右上", quality: "金" },
-              { name: "特殊4格竖", quality: "金", lines: ["暴伤 +8%", "暴击率 +4%"] }
-            ],
-            extra: [
-              { name: "纵向2格", quality: "金" },
-              { name: "纵向2格", quality: "紫" },
-              { name: "纵向2格", quality: "紫" }
-            ],
-            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
-          },
-          {
-            name: "九原",
-            attr: "灵",
-            level: 60,
-            arc: { name: "现实避难所", level: 50, mix: "2阶" },
-            curtain: { name: "森林萤火之心", level: 20, main: "攻击力 +37.5%", subs: ["暴击伤害 +20%"] },
-            required: [
-              { name: "横向2格", quality: "金" },
-              { name: "横向2格", quality: "金" },
-              { name: "纵向3格", quality: "金" },
-              { name: "L型开口右上", quality: "紫" },
-              { name: "特殊4格竖", quality: "金" }
-            ],
-            extra: [
-              { name: "纵向2格", quality: "紫" },
-              { name: "纵向2格", quality: "紫" },
-              { name: "纵向2格", quality: "紫" }
-            ],
-            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
-          },
-          {
-            name: "零（主角）",
-            attr: "光",
-            level: 50,
-            arc: { name: "倾世之雨", level: 50, mix: "1阶" },
-            curtain: { name: "失落光芒", level: 20, main: "生命值 +37.5%", mainIssue: "主属性不符合", subs: ["攻击力 +80", "伤害增加 +10%"] },
-            required: [
-              { name: "横向2格", quality: "紫" },
-              { name: "横向2格", quality: "紫" },
-              { name: "L型开口右上", quality: "紫" },
-              { name: "L型开口左下", quality: "金" },
-              { name: "特殊4格竖", quality: "金" }
-            ],
-            extra: [
-              { name: "纵向3格", quality: "紫" },
-              { name: "横向3格", quality: "金" }
-            ],
-            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
-          },
-          {
-            name: "早雾",
-            attr: "咒",
-            level: 50,
-            arc: { name: "好狗狗走四方", level: 20, mix: "1阶" },
-            curtain: { name: "音速蓝刺猬", level: 0, missing: true, main: "咒属性增伤 +6%", subs: [] },
-            required: [
-              { name: "L型开口右上", quality: "金" },
-              { name: "L型开口右下", quality: "金" },
-              { name: "L型开口左下", quality: "金" },
-              { name: "L型开口左上", quality: "金" }
-            ],
-            extra: [
-              { name: "纵向2格", quality: "紫" },
-              { name: "横向3格", quality: "金" },
-              { name: "横向3格", quality: "金" }
-            ],
-            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
-          }
-        ]
+            "id": "team1",
+            "name": "1队",
+            "roles": [
+                  {
+                        "name": "娜娜莉",
+                        "attr": "灵",
+                        "level": 60,
+                        "keyStats": [
+                              {
+                                    "label": "攻击力",
+                                    "value": "1651"
+                              },
+                              {
+                                    "label": "暴击率",
+                                    "value": "75.20%"
+                              },
+                              {
+                                    "label": "暴击伤害",
+                                    "value": "136.80%"
+                              },
+                              {
+                                    "label": "通用伤害增强",
+                                    "value": "6.2%"
+                              }
+                        ],
+                        "arc": {
+                              "name": "预备备",
+                              "level": 60,
+                              "mix": "1阶"
+                        },
+                        "curtain": {
+                              "subs": [
+                                    "攻击力 +12.5%",
+                                    "暴击率 +10%"
+                              ],
+                              "name": "森林萤火之心",
+                              "level": 20,
+                              "main": "暴伤 +60%"
+                        },
+                        "required": [
+                              {
+                                    "name": "横向2格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴击率",
+                                          "攻击力"
+                                    ]
+                              },
+                              {
+                                    "name": "横向2格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴击率"
+                                    ]
+                              },
+                              {
+                                    "name": "纵向3格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力",
+                                          "暴伤",
+                                          "攻击力",
+                                          "伤害"
+                                    ]
+                              },
+                              {
+                                    "name": "L型开口右上",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴击率"
+                                    ]
+                              },
+                              {
+                                    "name": "特殊4格竖",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴伤",
+                                          "暴击率"
+                                    ]
+                              }
+                        ],
+                        "extra": [
+                              {
+                                    "name": "纵向2格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力",
+                                          "暴伤"
+                                    ]
+                              },
+                              {
+                                    "name": "纵向2格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "纵向2格",
+                                    "quality": "紫"
+                              }
+                        ],
+                        "todo": [
+                              "队伍定位",
+                              "技能等级",
+                              "驱动块实际持有与缺口状态",
+                              "后续替换目标"
+                        ]
+                  },
+                  {
+                        "name": "九原",
+                        "attr": "灵",
+                        "level": 60,
+                        "keyStats": [],
+                        "arc": {
+                              "name": "现实避难所",
+                              "level": 50,
+                              "mix": "2阶"
+                        },
+                        "curtain": {
+                              "subs": [
+                                    "暴击伤害 +20%"
+                              ],
+                              "name": "森林萤火之心",
+                              "level": 20,
+                              "main": "攻击力 +37.5%"
+                        },
+                        "required": [
+                              {
+                                    "name": "横向2格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力提升"
+                                    ]
+                              },
+                              {
+                                    "name": "横向2格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力增加"
+                                    ]
+                              },
+                              {
+                                    "name": "纵向3格",
+                                    "quality": "金"
+                              },
+                              {
+                                    "name": "L型开口右上",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "特殊4格竖",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力增加"
+                                    ]
+                              }
+                        ],
+                        "extra": [
+                              {
+                                    "name": "纵向2格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "纵向2格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "纵向2格",
+                                    "quality": "紫"
+                              }
+                        ],
+                        "todo": [
+                              "队伍定位",
+                              "技能等级",
+                              "驱动块实际持有与缺口状态",
+                              "后续替换目标"
+                        ]
+                  },
+                  {
+                        "name": "零（主角）",
+                        "attr": "光",
+                        "level": 50,
+                        "keyStats": [],
+                        "arc": {
+                              "name": "倾世之雨",
+                              "level": 50,
+                              "mix": "1阶"
+                        },
+                        "curtain": {
+                              "subs": [
+                                    "攻击力 +80",
+                                    "伤害增加 +10%"
+                              ],
+                              "name": "失落光芒",
+                              "level": 20,
+                              "mainIssue": "主属性不符合",
+                              "main": "生命值 +37.5%"
+                        },
+                        "required": [
+                              {
+                                    "name": "横向2格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "横向2格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "L型开口右上",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "L型开口左下",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴击率",
+                                          "攻击力增加"
+                                    ]
+                              },
+                              {
+                                    "name": "特殊4格竖",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴击率",
+                                          "暴伤",
+                                          "攻击力增加"
+                                    ]
+                              }
+                        ],
+                        "extra": [
+                              {
+                                    "name": "纵向3格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "横向3格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴伤",
+                                          "攻击力增加",
+                                          "伤害增加"
+                                    ]
+                              }
+                        ],
+                        "todo": [
+                              "队伍定位",
+                              "技能等级",
+                              "驱动块实际持有与缺口状态",
+                              "后续替换目标"
+                        ]
+                  },
+                  {
+                        "name": "浔",
+                        "attr": "光",
+                        "level": 54,
+                        "keyStats": [],
+                        "arc": {
+                              "name": "行进于时间之外",
+                              "level": 50,
+                              "mix": "2阶"
+                        },
+                        "curtain": {
+                              "subs": [
+                                    "攻击力提升",
+                                    "暴击率"
+                              ],
+                              "missing": true,
+                              "name": "失落光芒",
+                              "level": 20,
+                              "main": "暴击率"
+                        },
+                        "required": [
+                              {
+                                    "name": "横向2格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "伤害增加"
+                                    ]
+                              },
+                              {
+                                    "name": "L型开口右上",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴击率"
+                                    ]
+                              },
+                              {
+                                    "name": "L型开口右上",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "L型开口左下",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力增加"
+                                    ]
+                              },
+                              {
+                                    "name": "特殊4格竖",
+                                    "quality": "金",
+                                    "lines": [
+                                          "伤害增加",
+                                          "暴击率",
+                                          "暴伤"
+                                    ]
+                              }
+                        ],
+                        "extra": [
+                              {
+                                    "name": "纵向2格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴击率"
+                                    ]
+                              },
+                              {
+                                    "name": "纵向3格",
+                                    "quality": "紫"
+                              }
+                        ],
+                        "todo": [
+                              "队伍定位",
+                              "技能等级",
+                              "驱动块实际持有与缺口状态",
+                              "后续替换目标"
+                        ]
+                  }
+            ]
       },
       {
-        id: "team2",
-        name: "2队",
-        roles: [
-          {
-            name: "小吱",
-            attr: "光",
-            level: 60,
-            keyStats: [
-              { label: "攻击力", value: "1533" },
-              { label: "暴击率", value: "5%" },
-              { label: "暴击伤害", value: "92.8%" },
-              { label: "通用伤害增强", value: "12.6%" }
-            ],
-            arc: { name: "思考喵", level: 50, mix: "1阶" },
-            curtain: { name: "失落光芒", level: 20, missing: true, main: "暴击率 +18%", subs: ["攻击力 +7.5%", "暴击伤害 +12%"] },
-            required: [
-              { name: "横向2格", quality: "紫" },
-              { name: "横向2格", quality: "紫" },
-              { name: "L型开口右上", quality: "紫" },
-              { name: "L型开口左下", quality: "金" },
-              { name: "特殊4格竖", quality: "金" }
-            ],
-            extra: [
-              { name: "L型开口左上", quality: "金" },
-              { name: "L型开口右下", quality: "紫" }
-            ],
-            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
-          },
-          {
-            name: "哈索尔",
-            attr: "相",
-            level: 50,
-            arc: { name: "焰魂狂飙", level: 50, mix: "2阶" },
-            curtain: { name: "街头拳王", level: 20, missing: true, main: "暴伤 +48%", subs: [] },
-            required: [
-              { name: "横向2格", quality: "金" },
-              { name: "横向2格", quality: "紫" },
-              { name: "横向3格", quality: "金" },
-              { name: "横向3格", quality: "金" },
-              { name: "L型开口左下", quality: "金" },
-              { name: "L型开口左下", quality: "金" },
-              { name: "特殊4格横", quality: "金" }
-            ],
-            extra: [
-              { name: "L型开口左上", quality: "金" }
-            ],
-            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
-          },
-          {
-            name: "阿德勒",
-            attr: "咒",
-            level: 50,
-            arc: { name: "勿亡伞", level: 40, mix: "5阶" },
-            curtain: { name: "守卫王国", level: 0, missing: true, main: "防御力 +6.3%", subs: [] },
-            required: [
-              { name: "纵向3格", quality: "金" },
-              { name: "纵向3格", quality: "紫" },
-              { name: "纵向3格", quality: "紫" },
-              { name: "横向3格", quality: "金" },
-              { name: "L型开口左下", quality: "金" },
-              { name: "L型开口左上", quality: "紫" }
-            ],
-            extra: [
-              { name: "横向2格", quality: "紫" }
-            ],
-            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
-          },
-          {
-            name: "薄荷",
-            attr: "灵",
-            level: 50,
-            arc: { name: "极速之绵", level: 50, mix: "1阶" },
-            curtain: { name: "森林萤火之心", level: 20, main: "暴击率 +30%", subs: ["暴击伤害 +20%", "攻击力 +80"] },
-            required: [
-              { name: "横向2格", quality: "金" },
-              { name: "横向2格", quality: "紫" },
-              { name: "纵向3格", quality: "紫" },
-              { name: "L型开口右上", quality: "金" },
-              { name: "特殊4格竖", quality: "金" }
-            ],
-            extra: [
-              { name: "L型开口右下", quality: "紫" },
-              { name: "L型开口右下", quality: "紫" }
-            ],
-            todo: ["队伍定位", "技能等级", "驱动块实际持有与缺口状态", "后续替换目标"]
-          }
-        ]
+            "id": "team2",
+            "name": "2队",
+            "roles": [
+                  {
+                        "name": "小吱",
+                        "attr": "光",
+                        "level": 60,
+                        "keyStats": [
+                              {
+                                    "label": "攻击力",
+                                    "value": "1533"
+                              },
+                              {
+                                    "label": "暴击率",
+                                    "value": "5%"
+                              },
+                              {
+                                    "label": "暴击伤害",
+                                    "value": "92.8%"
+                              },
+                              {
+                                    "label": "通用伤害增强",
+                                    "value": "12.6%"
+                              }
+                        ],
+                        "arc": {
+                              "name": "思考喵",
+                              "level": 50,
+                              "mix": "1阶"
+                        },
+                        "curtain": {
+                              "subs": [
+                                    "攻击力 +7.5%",
+                                    "暴击伤害 +12%"
+                              ],
+                              "missing": true,
+                              "name": "失落光芒",
+                              "level": 20,
+                              "main": "暴击率 +18%"
+                        },
+                        "required": [
+                              {
+                                    "name": "横向2格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "横向2格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "L型开口右上",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "L型开口左下",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力提升",
+                                          "暴伤"
+                                    ]
+                              },
+                              {
+                                    "name": "特殊4格竖",
+                                    "quality": "金",
+                                    "lines": [
+                                          "伤害增加"
+                                    ]
+                              }
+                        ],
+                        "extra": [
+                              {
+                                    "name": "L型开口左上",
+                                    "quality": "金",
+                                    "lines": [
+                                          "伤害增加",
+                                          "暴伤"
+                                    ]
+                              },
+                              {
+                                    "name": "L型开口右下",
+                                    "quality": "紫"
+                              }
+                        ],
+                        "todo": [
+                              "队伍定位",
+                              "技能等级",
+                              "驱动块实际持有与缺口状态",
+                              "后续替换目标"
+                        ]
+                  },
+                  {
+                        "name": "哈索尔",
+                        "attr": "相",
+                        "level": 50,
+                        "keyStats": [],
+                        "arc": {
+                              "name": "焰魂狂飙",
+                              "level": 50,
+                              "mix": "2阶"
+                        },
+                        "curtain": {
+                              "subs": [],
+                              "missing": true,
+                              "name": "街头拳王",
+                              "level": 20,
+                              "main": "暴伤 +48%"
+                        },
+                        "required": [
+                              {
+                                    "name": "横向2格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力增加",
+                                          "暴击率"
+                                    ]
+                              },
+                              {
+                                    "name": "横向2格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "横向3格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力提升",
+                                          "伤害增加",
+                                          "暴击率"
+                                    ]
+                              },
+                              {
+                                    "name": "L型开口左下",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴伤",
+                                          "伤害增加",
+                                          "暴击率"
+                                    ]
+                              },
+                              {
+                                    "name": "L型开口左下",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力增加",
+                                          "暴击率"
+                                    ]
+                              },
+                              {
+                                    "name": "特殊4格横",
+                                    "quality": "金",
+                                    "lines": [
+                                          "伤害增加",
+                                          "暴伤"
+                                    ]
+                              }
+                        ],
+                        "extra": [
+                              {
+                                    "name": "L型开口左上",
+                                    "quality": "金",
+                                    "lines": [
+                                          "伤害增加"
+                                    ]
+                              }
+                        ],
+                        "todo": [
+                              "队伍定位",
+                              "技能等级",
+                              "驱动块实际持有与缺口状态",
+                              "后续替换目标"
+                        ]
+                  },
+                  {
+                        "name": "早雾",
+                        "attr": "咒",
+                        "level": 50,
+                        "keyStats": [],
+                        "arc": {
+                              "name": "好狗狗走四方",
+                              "level": 20,
+                              "mix": "1阶"
+                        },
+                        "curtain": {
+                              "subs": [],
+                              "missing": true,
+                              "name": "音速蓝刺猬",
+                              "level": 0,
+                              "main": "咒属性增伤 +6%"
+                        },
+                        "required": [
+                              {
+                                    "name": "L型开口右上",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力增加",
+                                          "攻击力提升"
+                                    ]
+                              },
+                              {
+                                    "name": "L型开口右下",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力提升",
+                                          "伤害增加"
+                                    ]
+                              },
+                              {
+                                    "name": "L型开口左下",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力提升"
+                                    ]
+                              },
+                              {
+                                    "name": "L型开口左上",
+                                    "quality": "金",
+                                    "lines": [
+                                          "伤害增加"
+                                    ]
+                              }
+                        ],
+                        "extra": [
+                              {
+                                    "name": "纵向2格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "横向3格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力提升",
+                                          "攻击力增加"
+                                    ]
+                              },
+                              {
+                                    "name": "横向3格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴击率提升",
+                                          "伤害增加"
+                                    ]
+                              }
+                        ],
+                        "todo": [
+                              "队伍定位",
+                              "技能等级",
+                              "驱动块实际持有与缺口状态",
+                              "后续替换目标"
+                        ]
+                  },
+                  {
+                        "name": "薄荷",
+                        "attr": "灵",
+                        "level": 50,
+                        "keyStats": [],
+                        "arc": {
+                              "name": "极速之绵",
+                              "level": 50,
+                              "mix": "1阶"
+                        },
+                        "curtain": {
+                              "subs": [
+                                    "暴击伤害 +20%",
+                                    "攻击力 +80"
+                              ],
+                              "name": "森林萤火之心",
+                              "level": 20,
+                              "main": "暴击率 +30%"
+                        },
+                        "required": [
+                              {
+                                    "name": "横向2格",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力提升"
+                                    ]
+                              },
+                              {
+                                    "name": "横向2格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "纵向3格",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "L型开口右上",
+                                    "quality": "金",
+                                    "lines": [
+                                          "攻击力提升",
+                                          "暴击率"
+                                    ]
+                              },
+                              {
+                                    "name": "特殊4格竖",
+                                    "quality": "金",
+                                    "lines": [
+                                          "暴击率",
+                                          "暴伤"
+                                    ]
+                              }
+                        ],
+                        "extra": [
+                              {
+                                    "name": "L型开口右下",
+                                    "quality": "紫"
+                              },
+                              {
+                                    "name": "L型开口右下",
+                                    "quality": "紫"
+                              }
+                        ],
+                        "todo": [
+                              "队伍定位",
+                              "技能等级",
+                              "驱动块实际持有与缺口状态",
+                              "后续替换目标"
+                        ]
+                  }
+            ]
       }
-    ];
+];
 
     const attrClass = { "灵": "attr-ling", "光": "attr-guang", "咒": "attr-zhou", "相": "attr-xiang" };
     const allRoles = teams.flatMap(team => team.roles.map(role => ({ ...role, team: team.name })));
@@ -721,7 +1270,7 @@
         [allRoles.length, "已记录角色"],
         [totalDrivers, "驱动块条目"],
         [`${goldDrivers}/${purpleDrivers}`, "金色 / 紫色"],
-        [lineCount, "已记录驱动词条"]
+        [lineCount, "金色驱动有效属性"]
       ];
       document.getElementById("stats").innerHTML = stats.map(([num, label]) => `
         <div class="stat"><strong>${num}</strong><span>${label}</span></div>
@@ -730,17 +1279,45 @@
 
     function renderIssues() {
       const nonGoldMap = new Map();
+      const goldLineMap = new Map();
       allRoles.forEach(role => {
         drivers(role).forEach(item => {
-          if (item.quality === "金") return;
+          const count = item.count || 1;
+          if (item.quality === "金") {
+            const lineCount = Math.min((item.lines || []).length, 4);
+            const current = goldLineMap.get(item.name) || [0, 0, 0, 0, 0];
+            current[lineCount] += count;
+            goldLineMap.set(item.name, current);
+            return;
+          }
           const current = nonGoldMap.get(item.name) || { total: 0, purple: 0, missing: 0 };
-          current.total += 1;
-          if (item.quality === "紫") current.purple += 1;
-          if (item.missing || item.quality === "暂缺") current.missing += 1;
+          current.total += count;
+          if (item.quality === "紫") current.purple += count;
+          if (item.missing || item.quality === "暂缺") current.missing += count;
           nonGoldMap.set(item.name, current);
         });
       });
+
+      const shapeSet = new Set([...nonGoldMap.keys(), ...goldLineMap.keys()]);
       const nonGoldShapes = [...nonGoldMap.entries()].sort((a, b) => b[1].total - a[1].total || a[0].localeCompare(b[0], "zh-Hans-CN"));
+      const goldLineShapes = [...shapeSet].sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
+      const recommended = [];
+      const picked = new Set();
+      const pick = (name, reason) => {
+        if (picked.has(name) || recommended.length >= 8) return;
+        picked.add(name);
+        recommended.push({ name, reason });
+      };
+
+      nonGoldShapes.forEach(([name, stats]) => pick(name, `非金色 ${stats.total}`));
+      for (let lineCount = 0; lineCount <= 4 && recommended.length < 8; lineCount += 1) {
+        [...goldLineMap.entries()]
+          .map(([name, counts]) => ({ name, count: counts[lineCount] || 0 }))
+          .filter(item => item.count > 0)
+          .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "zh-Hans-CN"))
+          .forEach(item => pick(item.name, `${lineCount}条有效属性 ${item.count}`));
+      }
+
       const curtainIssues = allRoles.filter(role => role.curtain.missing || role.curtain.mainIssue);
       document.getElementById("issuePanel").innerHTML = `
         <article class="issue-card">
@@ -748,6 +1325,24 @@
           <ul class="issue-list">
             ${nonGoldShapes.length ? nonGoldShapes.map(([name, stats]) => `<li><b>${name}</b>：非金色 ${stats.total}${stats.purple ? `，紫色 ${stats.purple}` : ""}${stats.missing ? `，暂缺 ${stats.missing}` : ""}</li>`).join("") : "<li>当前所有已记录驱动块均为金色。</li>"}
           </ul>
+        </article>
+        <article class="issue-card">
+          <h3>金色驱动有效属性统计</h3>
+          <table class="matrix-table">
+            <thead><tr><th>形状</th><th>0条</th><th>1条</th><th>2条</th><th>3条</th><th>4条</th></tr></thead>
+            <tbody>
+              ${goldLineShapes.length ? goldLineShapes.map(name => {
+                const counts = goldLineMap.get(name) || [0, 0, 0, 0, 0];
+                return `<tr><td>${name}</td>${counts.map(value => `<td class="${value ? "has-value" : ""}">${value || "-"}</td>`).join("")}</tr>`;
+              }).join("") : `<tr><td colspan="6">当前没有记录金色驱动块。</td></tr>`}
+            </tbody>
+          </table>
+        </article>
+        <article class="issue-card">
+          <h3>推荐指定的8种形状</h3>
+          <ol class="recommend-list">
+            ${recommended.map((item, index) => `<li><span><span class="rank-badge">${index + 1}</span> <b>${item.name}</b></span><span>${item.reason}</span></li>`).join("")}
+          </ol>
         </article>
         <article class="issue-card">
           <h3>空幕与主属性问题</h3>
